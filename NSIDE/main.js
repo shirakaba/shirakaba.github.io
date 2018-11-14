@@ -1,9 +1,21 @@
 // whoa, no typescript and no compilation!
-
 const LibManager = {
-  libs: {},
+  libs: {
+    // 'tns-core-modules.d.ts': 'http://localhost:8888/shirakaba.github.io/NSIDE/lib/tns/tns-core-modules.d.ts'
+    // 'es2015.d.ts': 'https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/es2015.d.ts',
+    // 'es2015.d.ts': 'https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/es2015.d.ts',
+    // 'dom.d.ts': 'https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/dom.d.ts'
+  },
 
-  coreLibPath: `https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/`,
+  /* The root to look up any lib by. */
+  coreLibPath: `http://localhost:8888/shirakaba.github.io/NSIDE/typescript@${window.CONFIG.TSVersion}/lib/`,
+
+  // remoteLibs: {
+  //
+  // },
+
+  /* Falls back to unpkg upon 404 anyway. */
+  // coreLibPath: `https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/`,
 
   getReferencePaths(input) {
     const rx = /<reference path="([^"]+)"\s\/>/;
@@ -115,9 +127,14 @@ async function main() {
     experimentalDecorators: false,
     emitDecoratorMetadata: false,
 
-    target: monaco.languages.typescript.ScriptTarget.ES2017,
+    // target: monaco.languages.typescript.ScriptTarget.ES2017,
+    target: monaco.languages.typescript.ScriptTarget.ES2015, // (ES6)
+    // target: monaco.languages.typescript.ScriptTarget.ES5,
+    // lib: ["es6", "dom"], // We lose all libs
     jsx: monaco.languages.typescript.JsxEmit.None,
   };
+
+  // console.log('monaco.languages.typescript.ScriptTarget.ES5:', monaco.languages.typescript.ScriptTarget.ES5);
 
   const urlDefaults = Object.entries(defaultCompilerOptions).reduce(
     (acc, [key, value]) => {
