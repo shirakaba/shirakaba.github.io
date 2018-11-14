@@ -4,6 +4,7 @@
 <head>
 	<title>TypeScript playground</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="style.css">
 	<link rel="shortcut icon" href="favicon.ico">
@@ -20,10 +21,10 @@
 		window.CONFIG = {
 			availableTSVersions: Object.assign({}, window.localTSVersion || {}, {
 				// https://unpkg.com/monaco-editor/
-				// '3.0.1': { monaco: '0.14.3' },
-				// '2.8.1': { monaco: '0.13.1' },
+				'3.0.1': { monaco: '0.14.3' },
+				'2.8.1': { monaco: '0.13.1' },
 				'2.7.2': { monaco: '0.11.1' },
-				// '2.4.1': { monaco: '0.10.0' },
+				'2.4.1': { monaco: '0.10.0' },
 			}, {}),
 
 			extraLibs: params.has('lib') ? params.get('lib').split(',') : [],
@@ -187,21 +188,13 @@
 					<div style="margin-top: 2em;">Playground allows you to compile TypeScript and see JavaScript output.</div>
 
 					<div style="margin-top: 2em;">Differences from
-						<a href="https://www.typescriptlang.org/play" target="_blank">typescriptlang.org/play</a>:
+						<a href="https://agentcooper.github.io/typescript-play/" target="_blank">agentcooper.github.io/typescript-play</a>:
 					</div>
 					<ul class="compact-list" style="margin-top: 0.5em;">
-						<li>&ndash; All strict options turned on by default</li>
-						<li>&ndash; More available compiler options</li>
-						<li>&ndash; Ability to switch TypeScript version</li>
-						<li>&ndash; More space for code</li>
-						<li>&ndash; More examples</li>
-						<li>&ndash; Quicker sharing, URL updates as you type</li>
-						<li>&ndash; Shorter sharing URLs</li>
-						<li>
-							&ndash;
-							<a href="https://github.com/agentcooper/typescript-play">Open source</a>
-						</li>
+						<li>&ndash; NativeScript typings</li>
+						<li>&ndash; Output window hidden</li>
 					</ul>
+					<p><span>Just like agentcooper's, it's </span><a href="https://github.com/shirakaba/typescript-play">open source</a><span>.</span></p>
 				</div>
 			</div>
 
@@ -214,7 +207,7 @@
 		</header>
 		<main id="playground">
 			<section id="input"></section>
-			<section id="output"></section>
+			<!-- <section id="output"></section> -->
 		</main>
 	</div>
 
