@@ -10,10 +10,6 @@ const LibManager = {
   /* The root to look up any lib by. */
   coreLibPath: `http://localhost:8888/shirakaba.github.io/NSIDE/typescript@${window.CONFIG.TSVersion}/lib/`,
 
-  // remoteLibs: {
-  //
-  // },
-
   /* Falls back to unpkg upon 404 anyway. */
   // coreLibPath: `https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/`,
 
@@ -29,6 +25,8 @@ const LibManager = {
     });
   },
 
+  /* Given: "http://localhost:8888/shirakaba.github.io/NSIDE/typescript@2.7.2/lib/tns-core-modules/tns-core-modules.d.ts"
+   *     -> "tns-core-modules.d.ts" */
   basename(url) {
     const parts = url.split("/");
     if (parts.length === 0) {
@@ -37,15 +35,21 @@ const LibManager = {
     return parts[parts.length - 1];
   },
 
+  /* Given: "http://localhost:8888/shirakaba.github.io/NSIDE/typescript@2.7.2/lib/tns-core-modules/tns-core-modules.d.ts"
+   *     -> "http://localhost:8888/shirakaba.github.io/NSIDE/typescript@2.7.2/lib/tns-core-modules" */
+  dirname(url) {
+    const parts = url.split("/");
+    if (parts.length === 0) {
+      throw new Error(`Bad url: "${url}"`);
+    }
+    return parts.slice(0, -1).join("/");
+  },
+
   addLib: async function(path, ...args) {
     if (path.indexOf("http") === 0) {
       return this._addRemoteLib(path, ...args);
     }
-    return this._addCoreLib(path, ...args);
-  },
-
-  _addCoreLib: async function(fileName, ...args) {
-    return this._addRemoteLib(`${this.coreLibPath}${fileName}`, ...args);
+    return this._addRemoteLib(`${this.coreLibPath}${path}`, ...args);
   },
 
   _addRemoteLib: async function(
@@ -79,7 +83,11 @@ const LibManager = {
       if (paths.length > 0) {
         console.log(`${fileName} depends on ${paths.join(", ")}`);
         for (const path of paths) {
-          await this._addCoreLib(path, stripNoDefaultLib, followReferences);
+          // await this._addRemoteLib(`${this.coreLibPath}${path}`, stripNoDefaultLib, followReferences);
+          const dirname = this.dirname(url);
+          const lookup = `${dirname}/${path}`;
+          console.log(`Looking for import "${path}" at: "${lookup}"...`);
+          await this._addRemoteLib(lookup, stripNoDefaultLib, followReferences);
         }
       }
     }
