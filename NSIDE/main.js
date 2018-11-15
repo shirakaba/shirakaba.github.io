@@ -92,16 +92,23 @@ const LibManager = {
       }
     }
 
-    const lib = monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      text,
-      fileName,
-    );
+    // function (e,t){var n=this;if(void 0===t&&(t="ts:extralib-"+Date.now()),this._extraLibs[t])throw new Error(t+" already a extra lib");return this._extraLibs[t]=e,this._onDidChange.fire(this),{dispose:function(){delete n._extraLibs[t]&&n._onDidChange.fire(n)}}}
+    // monaco.languages.typescript.typescriptDefaults._extraLibs
+    let lib;
+    try {
+      lib = monaco.languages.typescript.typescriptDefaults.addExtraLib(
+        text,
+        fileName,
+      );
+      
+      console.groupCollapsed(`Added '${fileName}'`);
+      console.log(text);
+      console.groupEnd();
 
-    console.groupCollapsed(`Added '${fileName}'`);
-    console.log(text);
-    console.groupEnd();
-
-    this.libs[fileName] = lib;
+      this.libs[fileName] = lib;
+    } catch (e){
+      console.warn(e);
+    }
 
     return lib;
   },
@@ -443,7 +450,11 @@ console.log(message);
   };
 
   for (const path of window.CONFIG.extraLibs) {
-    await LibManager.addLib(path);
+    try {
+      await LibManager.addLib(path);
+    } catch (e){
+      console.error(e);
+    }
   }
 
   monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
