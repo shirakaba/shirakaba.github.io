@@ -256,14 +256,14 @@ function copyJSToClipboard(){
 				});
 			</script>
 
-			<div class="header-item header-item--extra-padding popup-on-hover" id="settings">
+			<!-- <div class="header-item header-item--extra-padding popup-on-hover" id="settings">
 				<p class="popup-header">Options</p>
 				<div class="popup" id="settings-popup" style="min-width: 20em;">
 					Loading...
 				</div>
-			</div>
+			</div> -->
 
-			<div class="header-item header-item--extra-padding popup-on-hover" id="run">
+			<!-- <div class="header-item header-item--extra-padding popup-on-hover" id="run">
 				<p class="popup-header">Run</p>
 				<div class="popup" id="run-popup" style="min-width: 20em;">
 					<script>
@@ -284,7 +284,7 @@ function copyJSToClipboard(){
 						`);
 					</script>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="header-item popup-on-hover" id="about">
 				<p class="popup-header">About</p>
@@ -311,11 +311,11 @@ function copyJSToClipboard(){
 				<a style="border: none;" target="_blank" href="https://www.typescriptlang.org/docs/home.html">TS docs</a>
 			</p> -->
 		</header>
+		<button style="height: 50px; width: 100%;" onclick="copyJSToClipboard();">Copy to clipboard</button>
 		<main id="playground">
 			<section id="input"></section>
 			<section id="output"></section>
 		</main>
-		<button style="height: 50px;" onclick="copyJSToClipboard();">Copy to clipboard</button>
 	</div>
 
 	<script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
