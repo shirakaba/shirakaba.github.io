@@ -4,10 +4,94 @@
 <head>
 	<title>TypeScript playground</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 	<link rel="stylesheet" href="style.css">
 	<link rel="shortcut icon" href="favicon.ico">
+<script>
+// function iosCopyToClipboard(el, nodes) {
+//     var oldContentEditable = el.contentEditable,
+//         oldReadOnly = el.readOnly,
+//         range = document.createRange();
+
+//     el.contentEditable = true;
+//     el.readOnly = false;
+//     range.selectNodeContents(el);
+
+//     var s = window.getSelection();
+//     s.removeAllRanges();
+//     s.addRange(range);
+
+//     el.setSelectionRange(0, Number.MAX_VALUE);
+
+//     el.contentEditable = oldContentEditable;
+//     el.readOnly = oldReadOnly;
+
+//     document.execCommand('copy');
+// }
+
+// function viewLinesToExecCopy(container, nodes) {
+//     window.getSelection().removeAllRanges();
+
+// 	nodes.forEach((node) => {
+// 	    const range = document.createRange();
+// 	    range.selectNodeContents(node);
+
+// 	    window.getSelection().addRange(range);
+// 	});
+
+//     // container.setSelectionRange(0, Number.MAX_VALUE);
+
+//     document.execCommand('copy');
+// }
+
+function viewLinesToExecCopyViaTextField(container) {
+	const textArea = document.createElement('textarea');
+	textArea.textContent = container.textContent;
+	textArea.contenteditable = true;
+	textArea.readOnly = false;
+	// textArea.style.display = "none";
+	document.body.appendChild(textArea);
+	// textArea.focus();
+  	textArea.select();
+
+    // const selection = window.getSelection();
+    // const range = document.createRange();
+    // range.selectNodeContents(textArea);
+    // selection.removeAllRanges();
+    // selection.addRange(range);
+    // textArea.setSelectionRange(0, Number.MAX_VALUE);
+
+    try {
+    	document.execCommand('copy');
+    } catch(e){
+    	console.error(e);
+    }
+    document.body.removeChild(textArea);
+}
+
+function copyJSToClipboard(){
+	const viewLines = document.getElementById('output').getElementsByClassName('view-lines')[0];
+
+	// const nodeArrArr = Array.from(viewLines.children).map((viewLine) => {
+	// 	const containerSpan = viewLine.firstElementChild;
+	// 	const childSpans = containerSpan.children;
+	// 	return Array.from(childSpans).map((span) => span.childNodes[0]);
+	// });
+	// const nodes = nodeArrArr.reduce((acc, nodeArr) => {
+	// 	nodeArr.forEach((node) => acc.push(node));
+	// 	return acc;
+	// }, []);
+	// viewLinesToExecCopy(viewLines, nodes);
+
+	viewLinesToExecCopyViaTextField(viewLines);
+}
+</script>
 </head>
 
 <body>
@@ -231,6 +315,7 @@
 			<section id="input"></section>
 			<section id="output"></section>
 		</main>
+		<button style="height: 50px;" onclick="copyJSToClipboard();">Copy to clipboard</button>
 	</div>
 
 	<script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
