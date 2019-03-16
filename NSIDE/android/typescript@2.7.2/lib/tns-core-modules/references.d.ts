@@ -1,0 +1,1 @@
+/// <reference path="../tns-platform-declarations/android.d.ts" />
