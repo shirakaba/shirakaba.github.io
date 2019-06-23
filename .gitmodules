@@ -1,0 +1,4 @@
+[submodule "react-nativescript"]
+	path = react-nativescript
+	url = https://github.com/shirakaba/react-nativescript-site.git
+	branch = master
